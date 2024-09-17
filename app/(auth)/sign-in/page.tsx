@@ -15,18 +15,15 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import * as React from "react";
 import { useForm } from "react-hook-form";
 import { BsGithub, BsMicrosoft } from "react-icons/bs";
 import { toast } from "sonner";
@@ -56,7 +53,7 @@ export default function SignInPage(props: ISignInPageProps) {
   }
 
   return (
-    <main className="min-h-screen w-full flex items-center">
+    <main className="min-h-screen bg-white w-full flex items-center">
       {/* Brand */}
       <div className="relative hidden min-h-screen w-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
         <div className="absolute inset-0">

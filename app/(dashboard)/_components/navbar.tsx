@@ -1,13 +1,15 @@
 import NavbarRoutes from "@/components/navbar-routes";
 import MobileSidebar from "./mobile-sidebar";
-import SidebarRoutes from "./sidebar-routes";
+import { User } from "@/typings";
 
-export interface INavbarProps {}
+export interface INavbarProps {
+  user: User;
+}
 
-export default function Navbar(props: INavbarProps) {
+export default function Navbar({ user }: INavbarProps) {
   return (
     <div className="p-4 border-b h-full flex items-center bg-[#0968AC] shadow-sm">
-      <MobileSidebar />
+      <MobileSidebar user={user} />
       <NavbarRoutes />
     </div>
   );

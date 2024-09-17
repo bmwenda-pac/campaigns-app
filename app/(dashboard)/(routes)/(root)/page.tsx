@@ -1,33 +1,8 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Button as NextuiButton } from "@nextui-org/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Input as NextuiInput } from "@nextui-org/input";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import { db } from "@/db/drizzle";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SendHorizonal, Wallet } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import BreadcrumbNav from "@/components/breadcrumb-nav";
 import PushMessage from "@/components/push-message-card";
 
 const formSchema = z.object({
@@ -51,12 +26,14 @@ export default function DashboardPage(props: IDashboardPageProps) {
   }
 
   return (
-    <main className="w-full h-full bg-[#F8F8F8] flex flex-col py-6 px-3 md:px-6 lg:px-24 space-y-4">
+    <main className="w-full h-full flex flex-col py-6 px-3 md:px-6 lg:px-24 space-y-4 overflow-y-auto">
       {/* Main Title */}
-      <BreadcrumbNav title={"Push-message"} />
+      {/* <BreadcrumbNav title={"Push-message"} /> */}
 
       {/* Message push area */}
       <PushMessage />
+
+      <div className="mt-10" />
     </main>
   );
 }

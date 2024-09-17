@@ -36,3 +36,12 @@ export async function fetchMicrosoftData(
     }
   }
 }
+
+export function createInitials(name: string | undefined) {
+  return name
+    ? name
+        .split(" ")
+        .map((n) => n.charAt(0))
+        .join("")
+    : "U";
+}
