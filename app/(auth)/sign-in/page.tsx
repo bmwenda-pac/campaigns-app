@@ -75,8 +75,8 @@ export default function SignInPage(props: ISignInPageProps) {
         </div>
       </div>
       {/* Login Form */}
-      <div className="md:px-16 mx-auto flex items-center justify-center">
-        <div className="min-w-[380px]">
+      <div className="px-4 md:px-16 mx-auto flex items-center justify-center">
+        <div className="max-w-[380px] lg:min-w-[380px]">
           <div className="w-full flex lg:hidden items-center justify-center mb-4">
             <Image
               src={"/img/Pacis-Logo.png"}
