@@ -15,6 +15,13 @@
       "when": 1726135377407,
       "tag": "0001_mighty_prima",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1726657930991,
+      "tag": "0002_nervous_wonder_man",
+      "breakpoints": true
     }
   ]
 }

@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  getGithubOAuthConsentUrl,
-  getMicrosoftOAuthConsentUrl,
-} from "@/actions/auth";
+import { getMicrosoftOAuthConsentUrl } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,7 +22,7 @@ import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { BsGithub, BsMicrosoft } from "react-icons/bs";
+import { BsMicrosoft } from "react-icons/bs";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -78,7 +75,7 @@ export default function SignInPage(props: ISignInPageProps) {
         </div>
       </div>
       {/* Login Form */}
-      <div className="px-16 mx-auto flex items-center justify-center">
+      <div className="md:px-16 mx-auto flex items-center justify-center">
         <div className="min-w-[380px]">
           <div className="w-full flex lg:hidden items-center justify-center mb-4">
             <Image
@@ -112,7 +109,7 @@ export default function SignInPage(props: ISignInPageProps) {
                   <BsMicrosoft className="mr-2 size-4" />
                   Microsoft
                 </Button>
-                <Button
+                {/* <Button
                   onClick={async () => {
                     const res = await getGithubOAuthConsentUrl();
                     if (res.url) {
@@ -126,7 +123,7 @@ export default function SignInPage(props: ISignInPageProps) {
                 >
                   <BsGithub className="mr-2 size-4" />
                   Github
-                </Button>
+                </Button> */}
               </div>
               <div className="w-full flex pt-5 pb-2 gap-1.5 items-center justify-center">
                 <Separator className="flex-1" />
