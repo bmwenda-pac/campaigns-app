@@ -1,9 +1,10 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 import PushMessage from "@/components/push-message-card";
+import { useGetMessages } from "@/actions/features/messages/use-get-messages";
+import BreadcrumbNav from "@/components/breadcrumb-nav";
+import { useState } from "react";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Please add a title." }),
@@ -13,25 +14,22 @@ const formSchema = z.object({
 export interface IDashboardPageProps {}
 
 export default function DashboardPage(props: IDashboardPageProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      message: "",
-    },
-  });
+  const [init, setInit] = useState(false);
+  const messages = useGetMessages();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({ values: values });
-  }
+  const firstCampaign = messages.data?.length === undefined;
+
+  const startCampaigns = () => {
+    setInit(true);
+  };
 
   return (
     <main className="w-full h-full flex flex-col py-6 px-3 md:px-6 lg:px-24 space-y-4 overflow-y-auto">
-      {/* Main Title */}
-      {/* <BreadcrumbNav title={"Push-message"} /> */}
-
-      {/* Message push area */}
-      <PushMessage />
+      {!firstCampaign && !init ? (
+        <BreadcrumbNav title={"Push-message"} updateState={startCampaigns} />
+      ) : (
+        <PushMessage />
+      )}
 
       <div className="mt-10" />
     </main>

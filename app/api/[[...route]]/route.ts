@@ -3,7 +3,7 @@ import { handle } from "hono/vercel";
 import { Session, User } from "lucia";
 
 import hello from "./hello";
-import pushMessage from "./push-message";
+import message from "./message";
 
 const app = new Hono<{
   Variables: {
@@ -12,7 +12,7 @@ const app = new Hono<{
   };
 }>().basePath("/api");
 
-const routes = app.route("/hello", hello).route("/push_message", pushMessage);
+const routes = app.route("/hello", hello).route("/message", message);
 
 export const GET = handle(app);
 export const POST = handle(app);

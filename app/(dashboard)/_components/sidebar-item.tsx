@@ -11,19 +11,24 @@ export interface ISidebarItemProps {
   title: string;
 }
 
-export default function SidebarItem(props: ISidebarItemProps) {
+export default function SidebarItem({
+  href,
+  icon,
+  thumbnail,
+  title,
+}: ISidebarItemProps) {
   return (
     <Link
       href={"#"}
       className="w-full h-full bg-card flex items-center justify-start gap-3 px-3 py-2 rounded-lg"
     >
       <div className="relative w-9 bg-[#0F172A] flex flex-col items-center justify-center p-[6px] rounded-md text-white">
-        M
+        {title.charAt(0)}
         <div className="absolute bg-white -top-2 -right-2 p-[2px] rounded-full">
           <Megaphone size={15} color="#000" />
         </div>
       </div>
-      New policy
+      <p className="text-sm line-clamp-1">{title}</p>
     </Link>
   );
 }

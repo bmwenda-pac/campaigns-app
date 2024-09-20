@@ -1,9 +1,10 @@
 "use client";
 
-import { MessageSquare, Plus } from "lucide-react";
+import { Megaphone, MessageSquare, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SidebarItem from "./sidebar-item";
 import { Separator } from "@/components/ui/separator";
+import { useGetMessages } from "@/actions/features/messages/use-get-messages";
 
 export interface ISidebarRoutesProps {}
 
@@ -17,17 +18,30 @@ const routes = [
 
 export default function SidebarRoutes(props: ISidebarRoutesProps) {
   // TODO: Api call to fetch past messages
+  const messages = useGetMessages();
+
+  console.log({ messages });
+
+  const data = messages.data ?? [];
+
   return (
     <div className="flex flex-col w-full p-4 space-y-2">
-      {/* <SidebarItem
-        href={"#"}
-        icon={Megaphone}
-        thumbnail={"M"}
-        title={"New policy"}
-      /> */}
+      {messages?.data?.map(({ messages }) => (
+        <SidebarItem
+          key={messages.id}
+          href={"#"}
+          icon={Megaphone}
+          thumbnail={"M"}
+          title={messages.title}
+        />
+      ))}
 
-      <SidebarItem.Skeleton />
-      <SidebarItem.Skeleton />
+      {data.length === 0 && (
+        <>
+          <SidebarItem.Skeleton />
+          <SidebarItem.Skeleton />
+        </>
+      )}
 
       <Separator />
 

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -15,7 +17,14 @@ import { ScrollArea } from "./ui/scroll-area";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { usePushMessage } from "@/actions/features/messages/use-push-message";
@@ -33,6 +42,9 @@ const FormSchema = z.object({
   messageBody: z.string().min(10, {
     message: "Message body must be at least 10 characters long",
   }),
+  csvFile: z
+    .instanceof(FileList)
+    .refine((file) => file?.length == 1, "File is required."),
   messageType: z.enum(["personalized", "generic"], {
     required_error: "Please select message type",
   }),
@@ -44,9 +56,12 @@ export default function PushMessage(props: IPushMessageProps) {
     defaultValues: {
       messageTitle: "",
       messageBody: "",
+      csvFile: undefined,
       messageType: "generic",
     },
   });
+
+  const fileRef = form.register("csvFile");
 
   // Mutation for sending messages
   const sendMutation = usePushMessage();
@@ -54,10 +69,13 @@ export default function PushMessage(props: IPushMessageProps) {
   const isPending = sendMutation.isPending;
 
   function sendMessage(values: z.infer<typeof FormSchema>) {
-    let payload = { title: values.messageTitle, body: values.messageBody };
-
+    let payload = {
+      title: values.messageTitle,
+      body: values.messageBody,
+      csv: values.csvFile,
+    };
+    console.log({ payload });
     sendMutation.mutate(payload);
-    // const { messageBody, messageTitle, messageType } = values;
 
     // toast("Message has been sent", {
     //   description: `${values.messageType}`,
@@ -81,6 +99,7 @@ export default function PushMessage(props: IPushMessageProps) {
                   size={"sm"}
                   variant={"secondary"}
                   className="p-0"
+                  disabled={isPending}
                 >
                   <div className="relative h-full items-center flex space-x-2 pr-10 pl-2">
                     Send a test
@@ -97,7 +116,7 @@ export default function PushMessage(props: IPushMessageProps) {
             <div className="flex flex-col space-y-6">
               <div className="md:flex gap-6">
                 {/* Message input */}
-                <div className="w-full max-w-sm flex flex-col space-y-6">
+                <div className="w-full lg:max-w-sm flex flex-col space-y-6">
                   <FormField
                     control={form.control}
                     name="messageTitle"
@@ -106,6 +125,7 @@ export default function PushMessage(props: IPushMessageProps) {
                         <FormControl>
                           <Input placeholder="Message title..." {...field} />
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />
@@ -121,8 +141,33 @@ export default function PushMessage(props: IPushMessageProps) {
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="csvFile"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Upload CSV</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="file"
+                              placeholder="Upload csv"
+                              {...fileRef}
+                              onChange={(event) => {
+                                field.onChange(
+                                  event.target?.files?.[0] ?? undefined
+                                );
+                              }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
                   />
 
                   <FormField
@@ -170,13 +215,13 @@ export default function PushMessage(props: IPushMessageProps) {
                           Tags
                         </h4>
                         {/* {tags.map((tag) => (
-                        <>
-                          <div key={tag} className="text-sm">
-                            {tag}
-                          </div>
-                          <Separator className="my-2" />
-                        </>
-                      ))} */}
+                          <>
+                            <div key={tag} className="text-sm">
+                              {tag}
+                            </div>
+                            <Separator className="my-2" />
+                          </>
+                        ))} */}
                       </div>
                     </ScrollArea>
                   </Card>
@@ -188,11 +233,15 @@ export default function PushMessage(props: IPushMessageProps) {
           <CardFooter>
             <div className="w-full grid grid-cols-1 justify-items-end">
               <div className="space-x-2">
-                <Button size={"sm"} className="bg-[#707070]">
+                <Button
+                  disabled={isPending}
+                  size={"sm"}
+                  className="bg-[#707070]"
+                >
                   Save as draft
                 </Button>
-                <Button size={"sm"}>
-                  Save and run <PaperPlaneIcon className="ml-2 size-4" />
+                <Button disabled={isPending} size={"sm"}>
+                  Save and send <PaperPlaneIcon className="ml-2 size-4" />
                 </Button>
               </div>
             </div>

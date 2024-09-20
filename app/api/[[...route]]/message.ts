@@ -6,7 +6,10 @@ import { zValidator } from "@hono/zod-validator";
 import { getCookie } from "hono/cookie";
 import { csrf } from "hono/csrf";
 import { Session, User } from "lucia";
-import { insertMessageSchema } from "@/db/schema";
+import { z } from "zod";
+import { db } from "@/db/drizzle";
+import { messages, users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const filePath = path.join(process.cwd(), "public", "test", "TEST3.csv");
 const fileContent = fs.readFileSync(filePath, "utf-8");
@@ -45,26 +48,43 @@ const app = new Hono<{
     }
 
     console.log({ user });
-    return c.json({ message: "Hello world!" });
+
+    const data = await db
+      .select()
+      .from(users)
+      .rightJoin(messages, eq(users.departmentId, messages.departmentId))
+      .where(eq(users.id, user.id));
+
+    return c.json({ message: "Hello world!", user: user, data: data });
   })
   .post(
     "/",
-    zValidator("json", insertMessageSchema.pick({ title: true, body: true })),
+    zValidator(
+      "json",
+      z.object({
+        title: z.string(),
+        body: z.string(),
+        csv: z.any(),
+      })
+    ),
     async (c) => {
       const user = c.get("user");
 
       if (!user?.id) {
         return c.json({ error: "Unauthorized" }, 401);
       }
-      const payload = c.req.valid("json");
 
-      console.log({ user });
-      console.log({ payload });
+      // const data = await db.insert(messages).values({
+      //   title: json.title,
+      //   body: json.body,
+      //   userId: "55a5c4e4-c128-4b99-a3fb-d02efd05c4fe",
+      //   departmentId: "rgvsra49nd4n81gbsuk3wifa",
+      // });
 
       return c.json(
         {
           ok: true,
-          message: "Created!",
+          message: "Sent!",
         },
         201
       );
