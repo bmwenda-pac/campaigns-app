@@ -24,6 +24,7 @@ export default function RootLayout({
           <QueryProvider>
             <main className="h-full">{children}</main>
             <Toaster />
+            {/* <ConfettiProvider /> */}
           </QueryProvider>
         </NextuiProvider>
       </body>
