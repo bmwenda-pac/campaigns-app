@@ -20,7 +20,7 @@ export default function BreadcrumbNav({
         </Button>
       </div>
 
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center gap-4">
         <h3 className="font-bold text-2xl">Create your first campaign</h3>
         <div className="flex flex-col items-center justify-center space-y-6">
           <p className="text-sm text-center text-muted-foreground max-w-lg">
@@ -39,7 +39,7 @@ export default function BreadcrumbNav({
         </div>
       </div>
 
-      <div className="absolute flex flex-col bottom-10">
+      <div className="absolute flex flex-col bottom-14">
         <Image
           alt="Mountains"
           src={"/img/Frame.png"}

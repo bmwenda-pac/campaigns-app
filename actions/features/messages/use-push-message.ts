@@ -1,12 +1,16 @@
+import qs from "query-string";
 import { client } from "@/lib/hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.message.$post>;
 type RequestType = InferRequestType<typeof client.api.message.$post>["json"];
 
 export const usePushMessage = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -18,19 +22,36 @@ export const usePushMessage = () => {
       formData.append("uploaded_file", json.csv[0]);
 
       try {
-        const response = await fetch(
-          "https://prod.api.pacisinsurance.com/3rdparty/sms/personalized?message=Have a great weekend. %23PacisTunakumind",
-          {
-            method: "POST",
-            body: formData,
-            redirect: "follow",
-          }
-        );
+        const url = qs.stringifyUrl({
+          url: `https://prod.api.pacisinsurance.com/3rdparty/sms/personalized`,
+          query: {
+            message: json.body,
+          },
+        });
 
-        return await response.json();
+        // console.log(url);
+
+        const response = await axios.post(url, formData);
+
+        return await response.data;
       } catch (error) {
-        console.error(error);
+        console.error();
       }
+
+      // try {
+      //   const response = await fetch(
+      //     "https://prod.api.pacisinsurance.com/3rdparty/sms/personalized?message=Have a great weekend. %23PacisTunakumind",
+      //     {
+      //       method: "POST",
+      //       body: formData,
+      //       redirect: "follow",
+      //     }
+      //   );
+
+      //   return await response.json();
+      // } catch (error) {
+      //   console.error(error);
+      // }
     },
     onSuccess: () => {
       toast.success("Message sent successful", {
@@ -40,6 +61,9 @@ export const usePushMessage = () => {
         },
       });
       // Todo: Invalidate message queries
+      queryClient.invalidateQueries({ queryKey: ["messages"] });
+
+      router.refresh();
     },
     onError: () => {
       toast.error("Failed to send message");
