@@ -19,15 +19,15 @@ export const usePushMessage = () => {
 
       // const response = await client.api.push_message.$post({ json });
       const formData = new FormData();
-      formData.append("uploaded_file", json.csv[0]);
+      formData.append("uploaded_file", json.csvFile[0]);
 
       await client.api.message.$post({ json });
 
       try {
         const url = qs.stringifyUrl({
-          url: `https://prod.api.pacisinsurance.com/3rdparty/sms/personalized`,
+          url: `https://prod.api.pacisinsurance.com/3rdparty/sms/${json.messageType}`,
           query: {
-            message: json.body,
+            message: json.messageBody,
           },
         });
 

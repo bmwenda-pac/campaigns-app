@@ -62,9 +62,10 @@ const app = new Hono<{
     zValidator(
       "json",
       z.object({
-        title: z.string(),
-        body: z.string(),
-        csv: z.any(),
+        messageTitle: z.string(),
+        messageBody: z.string(),
+        csvFile: z.any(),
+        messageType: z.enum(["personalized", "generic"]),
       })
     ),
     async (c) => {
@@ -80,8 +81,8 @@ const app = new Hono<{
       }
 
       const data = await db.insert(messages).values({
-        title: json.title,
-        body: json.body,
+        title: json.messageTitle,
+        body: json.messageBody,
         userId: "55a5c4e4-c128-4b99-a3fb-d02efd05c4fe",
         departmentId: "rgvsra49nd4n81gbsuk3wifa",
       });

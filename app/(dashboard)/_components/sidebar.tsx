@@ -2,7 +2,7 @@
 
 import Logo from "@/components/ui/logo";
 import { Separator } from "@/components/ui/separator";
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, Plus } from "lucide-react";
 import SidebarRoutes from "./sidebar-routes";
 import { createInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -32,6 +32,14 @@ export default function Sidebar({ user }: ISidebarProps) {
       <Separator />
       <div className="flex flex-col w-full">
         <SidebarRoutes />
+
+        <Separator />
+
+        {/* Add new campaign button  */}
+        <Button variant={"ghost"} className="text-muted-foreground">
+          <Plus className="mr-2 size-4" />
+          Add new campaign
+        </Button>
       </div>
       <div className="w-full flex px-4 py-6 bottom-0 absolute border-t">
         <div className="w-full flex items-center justify-between">

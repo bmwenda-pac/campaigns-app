@@ -1,10 +1,9 @@
 "use client";
 
-import { Megaphone, MessageSquare, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Megaphone, MessageSquare } from "lucide-react";
 import SidebarItem from "./sidebar-item";
-import { Separator } from "@/components/ui/separator";
 import { useGetMessages } from "@/actions/features/messages/use-get-messages";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface ISidebarRoutesProps {}
 
@@ -23,31 +22,34 @@ export default function SidebarRoutes(props: ISidebarRoutesProps) {
   const data = messages.data ?? [];
 
   return (
-    <div className="flex flex-col w-full p-4 space-y-2">
-      {messages?.data?.map(({ messages }) => (
-        <SidebarItem
-          key={messages.id}
-          href={"#"}
-          icon={Megaphone}
-          thumbnail={"M"}
-          title={messages.title}
-        />
-      ))}
+    <ScrollArea className="w-full h-[374px]">
+      <div className="flex flex-col w-full p-4 space-y-2">
+        {messages?.data?.map(({ messages }, i) => (
+          <SidebarItem
+            key={messages.id}
+            href={"#"}
+            icon={Megaphone}
+            thumbnail={"M"}
+            title={messages.title}
+            date={messages.sentAt}
+          />
+        ))}
 
-      {data.length === 0 && (
-        <>
-          <SidebarItem.Skeleton />
-          <SidebarItem.Skeleton />
-        </>
-      )}
+        {data.length === 0 && (
+          <>
+            <SidebarItem.Skeleton />
+            <SidebarItem.Skeleton />
+          </>
+        )}
 
-      <Separator />
+        {/* <Separator />
 
-      {/* Add new campaign button */}
-      <Button variant={"ghost"} className="text-muted-foreground">
-        <Plus className="mr-2 size-4" />
-        Add new campaign
-      </Button>
-    </div>
+        {/* Add new campaign button 
+        <Button variant={"ghost"} className="text-muted-foreground">
+          <Plus className="mr-2 size-4" />
+          Add new campaign
+        </Button> */}
+      </div>
+    </ScrollArea>
   );
 }

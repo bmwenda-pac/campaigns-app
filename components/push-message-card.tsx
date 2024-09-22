@@ -29,6 +29,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { usePushMessage } from "@/actions/features/messages/use-push-message";
 import { useRouter } from "next/navigation";
+import moment from "moment";
 
 export interface IPushMessageCardProps {}
 
@@ -72,9 +73,10 @@ export default function PushMessageCard(props: IPushMessageCardProps) {
       title: values.messageTitle,
       body: values.messageBody,
       csv: values.csvFile,
+      type: values.messageType,
     };
     console.log({ payload });
-    sendMutation.mutate(payload);
+    sendMutation.mutate(values);
 
     router.refresh();
   }
@@ -228,9 +230,13 @@ export default function PushMessageCard(props: IPushMessageCardProps) {
                           {/* Clock and Notifications area */}
                           <div className="h-full frame-minimal-phone-img bg-sky-100">
                             <div className="pt-[72px] px-5 pb-[10px]">
-                              <p className="text-7xl leading-[74px]">12:15</p>
+                              <p className="text-7xl leading-[74px]">
+                                {moment().format("HH:mm")}
+                              </p>
                               <p className="text-base font-light leading-8">
-                                Sunday, September 22
+                                {moment().format("dddd")}
+                                {", "}
+                                {moment().format("MMMM DD")}
                               </p>
                             </div>
 

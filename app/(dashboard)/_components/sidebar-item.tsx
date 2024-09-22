@@ -1,5 +1,6 @@
 "use client";
 
+import moment from "moment";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LucideIcon, Megaphone } from "lucide-react";
 import Link from "next/link";
@@ -9,6 +10,7 @@ export interface ISidebarItemProps {
   icon: LucideIcon;
   thumbnail: string;
   title: string;
+  date: string;
 }
 
 export default function SidebarItem({
@@ -16,6 +18,7 @@ export default function SidebarItem({
   icon,
   thumbnail,
   title,
+  date,
 }: ISidebarItemProps) {
   return (
     <Link
@@ -28,7 +31,12 @@ export default function SidebarItem({
           <Megaphone size={15} color="#000" />
         </div>
       </div>
-      <p className="text-sm line-clamp-1">{title}</p>
+      <div className="w-full">
+        <p className="text-xs line-clamp-1">{title}</p>
+        <p className="text-[8px] text-muted-foreground">
+          {moment(date).fromNow()} min ago
+        </p>
+      </div>
     </Link>
   );
 }
