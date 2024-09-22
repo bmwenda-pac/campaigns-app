@@ -21,6 +21,8 @@ export const usePushMessage = () => {
       const formData = new FormData();
       formData.append("uploaded_file", json.csv[0]);
 
+      await client.api.message.$post({ json });
+
       try {
         const url = qs.stringifyUrl({
           url: `https://prod.api.pacisinsurance.com/3rdparty/sms/personalized`,

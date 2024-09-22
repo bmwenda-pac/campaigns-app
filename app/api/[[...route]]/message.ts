@@ -70,16 +70,21 @@ const app = new Hono<{
     async (c) => {
       const user = c.get("user");
 
+      const json = c.req.valid("json");
+
+      console.log("USER>>>>>>", user);
+      console.log({ json });
+
       if (!user?.id) {
         return c.json({ error: "Unauthorized" }, 401);
       }
 
-      // const data = await db.insert(messages).values({
-      //   title: json.title,
-      //   body: json.body,
-      //   userId: "55a5c4e4-c128-4b99-a3fb-d02efd05c4fe",
-      //   departmentId: "rgvsra49nd4n81gbsuk3wifa",
-      // });
+      const data = await db.insert(messages).values({
+        title: json.title,
+        body: json.body,
+        userId: "55a5c4e4-c128-4b99-a3fb-d02efd05c4fe",
+        departmentId: "rgvsra49nd4n81gbsuk3wifa",
+      });
 
       return c.json(
         {

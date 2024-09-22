@@ -1,10 +1,15 @@
 "use client";
 
 import { z } from "zod";
-import PushMessage from "@/components/push-message-card";
 import { useGetMessages } from "@/actions/features/messages/use-get-messages";
 import BreadcrumbNav from "@/components/breadcrumb-nav";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+
+const PushMessageCard = dynamic(
+  () => import("@/components/push-message-card"),
+  { ssr: false }
+);
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Please add a title." }),
@@ -19,6 +24,8 @@ export default function DashboardPage(props: IDashboardPageProps) {
 
   const firstCampaign = messages.data?.length === undefined;
 
+  console.log("FIRST CAMPAIGN", firstCampaign);
+
   const startCampaigns = () => {
     setInit(true);
   };
@@ -28,7 +35,7 @@ export default function DashboardPage(props: IDashboardPageProps) {
       {!firstCampaign && !init ? (
         <BreadcrumbNav title={"Push-message"} updateState={startCampaigns} />
       ) : (
-        <PushMessage />
+        <PushMessageCard />
       )}
 
       <div className="mt-10" />

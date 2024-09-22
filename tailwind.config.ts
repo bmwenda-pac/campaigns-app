@@ -57,6 +57,7 @@ const config = {
       },
       backgroundImage: {
         "illustration-background": "url('/img/push-background.webp')",
+        "phone-mockup-background": "url('/img/hd-abstract-phone.jpg')",
       },
       borderRadius: {
         lg: "var(--radius)",

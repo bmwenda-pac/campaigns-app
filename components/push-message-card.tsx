@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { Settings, Smartphone } from "lucide-react";
+import { ChevronDown, Megaphone, Settings, Smartphone } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
@@ -28,12 +28,9 @@ import {
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { usePushMessage } from "@/actions/features/messages/use-push-message";
+import { useRouter } from "next/navigation";
 
-export interface IPushMessageProps {}
-
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-);
+export interface IPushMessageCardProps {}
 
 const FormSchema = z.object({
   messageTitle: z.string().min(2, {
@@ -50,7 +47,9 @@ const FormSchema = z.object({
   }),
 });
 
-export default function PushMessage(props: IPushMessageProps) {
+export default function PushMessageCard(props: IPushMessageCardProps) {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -77,13 +76,7 @@ export default function PushMessage(props: IPushMessageProps) {
     console.log({ payload });
     sendMutation.mutate(payload);
 
-    // toast("Message has been sent", {
-    //   description: `${values.messageType}`,
-    //   action: {
-    //     label: "Undo",
-    //     onClick: () => console.log("Undo"),
-    //   },
-    // });
+    router.refresh();
   }
 
   return (
@@ -209,19 +202,67 @@ export default function PushMessage(props: IPushMessageProps) {
                       </CardTitle>
                     </CardHeader>
                     <Separator />
-                    <ScrollArea className="h-72 w-full bg-illustration-background">
+                    <ScrollArea className="h-80 w-full bg-illustration-background">
                       <div className="p-4">
-                        <h4 className="mb-4 text-sm font-medium leading-none">
-                          Tags
-                        </h4>
-                        {/* {tags.map((tag) => (
-                          <>
-                            <div key={tag} className="text-sm">
-                              {tag}
+                        <figure className="relative text-center text-card-foreground frame-minimal-phone h-[550px]">
+                          {/* <img
+                            className="frame-minimal-phone-img"
+                            // src="https://s3.amazonaws.com/www-inside-design/uploads/2019/05/2-Screen-Onboarding-1-min.jpg"
+                            src="/img/android_light.png"
+                            alt="screenshot"
+                          /> */}
+                          {/* Status Bar */}
+                          <div className="absolute z-10 w-full flex items-center justify-start text-muted-foreground pointer-events-none my-4 px-6 py-2 top-1.5 h-4 ">
+                            <div className="text-center pl-2 flex-grow"></div>
+                            <div>
+                              <svg width="12" height="12" className="mr-2">
+                                <path d="M0 3 L6 11 L12 3 C9 0, 3 0, 0 3"></path>
+                              </svg>
                             </div>
-                            <Separator className="my-2" />
-                          </>
-                        ))} */}
+                            <div>
+                              <div className="block bg-slate-600 relative mr-1 w-[7px] h-[11px] rounded-[1px] cBhyaP"></div>
+                            </div>
+                            <div>28&nbsp;%</div>
+                          </div>
+
+                          {/* Clock and Notifications area */}
+                          <div className="h-full frame-minimal-phone-img bg-sky-100">
+                            <div className="pt-[72px] px-5 pb-[10px]">
+                              <p className="text-7xl leading-[74px]">12:15</p>
+                              <p className="text-base font-light leading-8">
+                                Sunday, September 22
+                              </p>
+                            </div>
+
+                            <div className="flex bg-card/45 rounded-sm mt-2 mx-2 overflow-hidden">
+                              <div className="w-full pt-3 px-4 pb-2">
+                                <div className="flex items-center">
+                                  <Megaphone size={15} className="mr-2" />
+                                  <div className="text-sm text-muted-foreground">
+                                    Pacis Kenya
+                                  </div>
+                                  &nbsp;•&nbsp;&nbsp;
+                                  <div className="flex tracking-normal text-sm text-muted-foreground/75">
+                                    now
+                                  </div>
+                                  &nbsp;&nbsp;
+                                  <ChevronDown size={10} />
+                                </div>
+
+                                <div className="w-full flex items-center">
+                                  <div className="flex-1 order-1 text-sm">
+                                    <div className="w-full text-ellipsis text-start overflow-hidden font-semibold cursor-text">
+                                      Campaigns App
+                                    </div>
+                                    <div className="w-full mt-1 text-ellipsis text-start overflow-hidden cursor-text">
+                                      Message appears here...
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </figure>
                       </div>
                     </ScrollArea>
                   </Card>

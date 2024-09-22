@@ -1,3 +1,5 @@
+"use client";
+
 import { leapfrog } from "ldrs";
 
 leapfrog.register();

@@ -20,8 +20,6 @@ export default function SidebarRoutes(props: ISidebarRoutesProps) {
   // TODO: Api call to fetch past messages
   const messages = useGetMessages();
 
-  console.log({ messages });
-
   const data = messages.data ?? [];
 
   return (

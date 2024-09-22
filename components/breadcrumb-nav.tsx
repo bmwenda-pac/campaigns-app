@@ -25,7 +25,7 @@ export default function BreadcrumbNav({
         <div className="flex flex-col items-center justify-center space-y-6">
           <p className="text-sm text-center text-muted-foreground max-w-lg">
             With push notifications our clients are one click away from
-            revisiting our platform. It's the fastest and most efficient
+            revisiting our platform. It`&apos;`s the fastest and most efficient
             communication channel.
           </p>
           {/* <div className="absolute flex flex-col bottom-0">
