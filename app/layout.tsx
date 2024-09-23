@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { NextuiProvider } from "@/components/providers/nextui-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
+import ConfettiProvider from "@/components/providers/confetti-povider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ export default function RootLayout({
           <QueryProvider>
             <main className="h-full">{children}</main>
             <Toaster />
-            {/* <ConfettiProvider /> */}
+            <ConfettiProvider />
           </QueryProvider>
         </NextuiProvider>
       </body>

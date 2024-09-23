@@ -30,6 +30,7 @@ import { Label } from "./ui/label";
 import { usePushMessage } from "@/actions/features/messages/use-push-message";
 import { useRouter } from "next/navigation";
 import moment from "moment";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
 export interface IPushMessageCardProps {}
 
@@ -55,6 +56,7 @@ const FormSchema = z.object({
 
 export default function PushMessageCard(props: IPushMessageCardProps) {
   const router = useRouter();
+  const confetti = useConfettiStore();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -82,7 +84,7 @@ export default function PushMessageCard(props: IPushMessageCardProps) {
     };
     console.log({ payload });
     sendMutation.mutate(values);
-
+    confetti.onOpen();
     router.refresh();
   }
 
