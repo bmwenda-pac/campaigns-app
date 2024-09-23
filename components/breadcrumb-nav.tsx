@@ -39,7 +39,7 @@ export default function BreadcrumbNav({
         </div>
       </div>
 
-      <div className="absolute flex flex-col bottom-20 md:bottom-14">
+      <div className="absolute flex flex-col bottom-24 md:bottom-14">
         <Image
           alt="Mountains"
           src={"/img/Frame.png"}
