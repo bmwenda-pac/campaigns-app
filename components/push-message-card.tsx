@@ -37,9 +37,14 @@ const FormSchema = z.object({
   messageTitle: z.string().min(2, {
     message: "Message title must be at least 2 characters.",
   }),
-  messageBody: z.string().min(10, {
-    message: "Message body must be at least 10 characters long",
-  }),
+  messageBody: z
+    .string()
+    .min(10, {
+      message: "Message body must be at least 10 characters long",
+    })
+    .max(210, {
+      message: "Message body must be not be longer than 209 characters",
+    }),
   csvFile: z
     .instanceof(FileList)
     .refine((file) => file?.length == 1, "File is required."),
