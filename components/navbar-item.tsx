@@ -33,7 +33,7 @@ export default function NavbarItem({
       type="button"
       disabled={disabled}
       className={cn(
-        "flex items-center gap-x-2 mx-1 text-primary-foreground text-sm font-medium px-6 transition-all hover:bg-sky-200/20 rounded-md",
+        "flex items-center gap-x-2 mx-1 text-primary-foreground text-sm font-medium px-3 md:px-6 transition-all hover:bg-sky-200/20 rounded-md",
         isActive && "bg-[#0C4671] hover:bg-sky-200/20",
         disabled && "cursor-not-allowed"
       )}
