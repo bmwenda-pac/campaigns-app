@@ -143,9 +143,9 @@ export default function SignInPage(props: ISignInPageProps) {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                            hidden
                             placeholder="username@paciskenya.com"
                             {...field}
+                            hidden
                           />
                         </FormControl>
                         <FormMessage />
@@ -159,7 +159,7 @@ export default function SignInPage(props: ISignInPageProps) {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input hidden placeholder="*******" {...field} />
+                          <Input placeholder="*******" {...field} hidden />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
