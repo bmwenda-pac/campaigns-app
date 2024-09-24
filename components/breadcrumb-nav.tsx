@@ -13,7 +13,7 @@ export default function BreadcrumbNav({
   return (
     <div className="min-h-screen relative flex flex-col items-center space-y-20">
       <div className="w-full flex items-center justify-between">
-        <p className="font-semibold text-lg text-2xl">{title}</p>
+        <p className="font-semibold text-xl md:text-2xl">{title}</p>
 
         <Button size={"lg"} onClick={updateState}>
           New Campaign
@@ -39,7 +39,7 @@ export default function BreadcrumbNav({
         </div>
       </div>
 
-      <div className="absolute flex flex-col bottom-24 md:bottom-14">
+      <div className="absolute flex flex-col bottom-32 md:bottom-14">
         <Image
           alt="Mountains"
           src={"/img/Frame.png"}
