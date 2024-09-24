@@ -164,7 +164,7 @@ export default function SignInPage(props: ISignInPageProps) {
                       </FormItem>
                     )}
                   />
-                  <Button disabled type="submit" className="w-full">
+                  <Button type="submit" className="w-full">
                     Login
                   </Button>
                 </form>
