@@ -66,7 +66,7 @@ const app = new Hono<{
         messageBody: z.string(),
         csvFile: z.any(),
         messageType: z.enum(["personalized", "generic"]),
-      })
+      }),
     ),
     async (c) => {
       const user = c.get("user");
@@ -92,9 +92,9 @@ const app = new Hono<{
           ok: true,
           message: "Sent!",
         },
-        201
+        201,
       );
-    }
+    },
   );
 
 export default app;

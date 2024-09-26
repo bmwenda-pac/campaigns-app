@@ -144,7 +144,7 @@ export const users = mysqlTable("users", {
   id: varchar("id", { length: 255 }).primaryKey(),
   departmentId: varchar("department_id", { length: 255 }).references(
     () => departments.departmentId,
-    { onDelete: "cascade" }
+    { onDelete: "cascade" },
   ),
   displayName: varchar("display_name", { length: 50 }).notNull(),
   email: varchar("email", { length: 100 }).notNull().unique(),
@@ -189,7 +189,7 @@ export const drafts = mysqlTable("drafts", {
     .references(() => users.id, { onDelete: "cascade" }),
   departmentId: varchar("department_id", { length: 255 }).references(
     () => departments.departmentId,
-    { onDelete: "cascade" }
+    { onDelete: "cascade" },
   ),
   status: Status,
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -215,7 +215,7 @@ export const messages = mysqlTable("messages", {
     .references(() => users.id, { onDelete: "cascade" }),
   departmentId: varchar("department_id", { length: 255 }).references(
     () => departments.departmentId,
-    { onDelete: "cascade" }
+    { onDelete: "cascade" },
   ),
   status: Status,
   sentAt: timestamp("sent_at").defaultNow().notNull(),

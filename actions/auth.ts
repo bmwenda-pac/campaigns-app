@@ -24,7 +24,7 @@ export const getMicrosoftOAuthConsentUrl = async () => {
       codeVerifier,
       {
         scopes: ["User.Read"],
-      }
+      },
     );
 
     return { success: true, url: authUrl.toString() };

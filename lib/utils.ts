@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function fetchMicrosoftData(
   endpoint: string,
-  accessToken: string
+  accessToken: string,
 ) {
   const options = {
     headers: {

@@ -161,7 +161,7 @@ export default function PushMessageCard(props: IPushMessageCardProps) {
                               {...fileRef}
                               onChange={(event) => {
                                 field.onChange(
-                                  event.target?.files?.[0] ?? undefined
+                                  event.target?.files?.[0] ?? undefined,
                                 );
                               }}
                             />
