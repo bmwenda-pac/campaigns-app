@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 
 const PushMessageCard = dynamic(
   () => import("@/components/push-message-card"),
-  { ssr: false }
+  { ssr: false },
 );
 
 const formSchema = z.object({

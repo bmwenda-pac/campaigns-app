@@ -66,7 +66,7 @@ const app = new Hono<{
         messageBody: z.string(),
         csvFile: z.any(),
         messageType: z.enum(["personalized", "generic"]),
-      })
+      }),
     ),
     async (c) => {
       const user = c.get("user");
@@ -83,8 +83,8 @@ const app = new Hono<{
       const data = await db.insert(messages).values({
         title: json.messageTitle,
         body: json.messageBody,
-        userId: "55a5c4e4-c128-4b99-a3fb-d02efd05c4fe",
-        departmentId: "rgvsra49nd4n81gbsuk3wifa",
+        userId: user.id,
+        departmentId: "khw72yp2ova1uywzwg9dk1qq",
       });
 
       return c.json(
@@ -92,9 +92,9 @@ const app = new Hono<{
           ok: true,
           message: "Sent!",
         },
-        201
+        201,
       );
-    }
+    },
   );
 
 export default app;

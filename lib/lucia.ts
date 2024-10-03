@@ -1,4 +1,5 @@
-import { Lucia } from "lucia";
+import { cache } from "react";
+import { Lucia, TimeSpan } from "lucia";
 import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "@/db/drizzle";
 import { departments, session, users } from "@/db/schema";
@@ -10,14 +11,15 @@ const adapter = new DrizzleMySQLAdapter(db, session, users);
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     name: "campaigns-auth-cookie",
-    expires: false,
+    expires: true,
     attributes: {
       secure: process.env.NODE_ENV === "production",
     },
   },
+  sessionExpiresIn: new TimeSpan(5, "m"),
 });
 
-export const getUser = async () => {
+export const getUser = cache(async () => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value || null;
 
   if (!sessionId) return null;
@@ -31,15 +33,16 @@ export const getUser = async () => {
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes
+        sessionCookie.attributes,
       );
+      console.log("FETCHING USER");
     }
     if (!session) {
       const sessionCookie = await lucia.createBlankSessionCookie();
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes
+        sessionCookie.attributes,
       );
     }
   } catch (error) {
@@ -64,4 +67,4 @@ export const getUser = async () => {
     .where(eq(users.id, user.id));
 
   return dbUser[0];
-};
+});

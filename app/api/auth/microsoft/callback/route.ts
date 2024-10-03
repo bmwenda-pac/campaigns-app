@@ -90,7 +90,7 @@ export async function GET(req: NextRequest, res: Response) {
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
 
   redirect("/");

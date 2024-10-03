@@ -26,9 +26,8 @@ export async function GET(req: NextRequest, res: Response) {
     return new Response("Invalid Request", { status: 400 });
   }
 
-  const { accessToken } = await githubOAuthClient.validateAuthorizationCode(
-    code
-  );
+  const { accessToken } =
+    await githubOAuthClient.validateAuthorizationCode(code);
 
   const githubResponse = await fetch("https://api.github.com/user", {
     headers: {
@@ -80,7 +79,7 @@ export async function GET(req: NextRequest, res: Response) {
   cookies().set(
     sesssionCookie.name,
     sesssionCookie.value,
-    sesssionCookie.attributes
+    sesssionCookie.attributes,
   );
 
   redirect("/");
