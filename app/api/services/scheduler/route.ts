@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     console.log("");
     console.log("######################################");
     console.log("#                                    #");
-    console.log("# Running scheduler every 20 minutes #");
+    console.log("# Running scheduler @ 8:00AM EAT #");
     console.log("#                                    #");
     console.log("######################################");
     console.log("");
