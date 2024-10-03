@@ -21,7 +21,7 @@ export default function BreadcrumbNav({
       </div>
 
       <div className="flex flex-col items-center justify-center gap-4">
-        <h3 className="font-bold text-2xl">Create your first campaign</h3>
+        <h3 className="font-bold text-2xl">Create a new campaign</h3>
         <div className="flex flex-col items-center justify-center space-y-6">
           <p className="text-sm text-center text-muted-foreground max-w-lg">
             With push notifications our clients are one click away from
